@@ -8,7 +8,7 @@ import '../endpoints.dart';
 import '../models/remote/post_response.dart';
 
 class PostService {
-  Future<List<PostResponse>> getPosts() async {
+  static Future<List<PostResponse>> getPosts() async {
     Uri url = Uri.parse(Endpoints.posts);
     http.Response response = await http.get(url);
     log('Status Code: ${response.statusCode}');

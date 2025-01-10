@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/post_provider.dart';
 import 'pages/posts/posts_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -15,7 +17,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const PostsPage(),
+      home: ChangeNotifierProvider(
+        create: (_) => PostProvider()..getPosts(),
+        child: const PostsPage(),
+      ),
     );
   }
 }

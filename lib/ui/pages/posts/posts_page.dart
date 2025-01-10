@@ -1,73 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../../../data/models/remote/post_response.dart';
-import '../../../data/services/post_service.dart';
+import '../../../providers/post_provider.dart';
+import '../../widgets/global_loading.dart';
+import 'widgets/post_list_widget.dart';
 
-class PostsPage extends StatefulWidget {
+class PostsPage extends StatelessWidget {
   const PostsPage({super.key});
 
   @override
-  State<PostsPage> createState() => _PostsPageState();
-}
-
-class _PostsPageState extends State<PostsPage> {
-  late Future<List<PostResponse>> futurePosts;
-
-  @override
-  void initState() {
-    futurePosts = PostService.getPosts();
-    super.initState();
-  }
-
-  void _refreshPosts() {
-    futurePosts = PostService.getPosts();
-    setState(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final postProvider = context.read<PostProvider>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Posts'),
       ),
-      body: FutureBuilder(
-          future: futurePosts,
-          builder: (_, snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            List<PostResponse> posts = snapshot.data ?? [];
-            return RefreshIndicator(
-              onRefresh: () async => _refreshPosts(),
-              child: ListView.separated(
-                itemCount: posts.length,
-                padding: const EdgeInsets.all(16),
-                separatorBuilder: (_, __) => const SizedBox(height: 16),
-                itemBuilder: (_, i) {
-                  PostResponse post = posts[i];
-                  return ListTile(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      side: BorderSide(color: Colors.grey),
-                    ),
-                    leading: Text(
-                      '${post.id}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    title: Text(post.title),
-                    subtitle: post.body == null ? null : Text(post.body!),
-                  );
-                },
-              ),
-            );
-          }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _refreshPosts,
-        child: const Icon(Icons.refresh),
+      body: Consumer<PostProvider>(
+        builder: (_, __, ___) {
+          if (postProvider.currentState == PostStates.loading) {
+            return const GlobalLoading();
+          } else if (postProvider.currentState == PostStates.success) {
+            return PostListWidget(posts: postProvider.posts);
+          } else if (postProvider.currentState == PostStates.networkError) {
+            return const Center(child: Text('Network Error Occured'));
+          }
+          return const Center(child: Text('Error Occured'));
+        },
       ),
     );
   }

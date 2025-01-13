@@ -5,4 +5,9 @@ class Endpoints {
 
   static const String posts = '$_baseURL/posts';
   static const String users = '$_baseURL/users';
+
+  static const String verifyEmail =
+      'http://134.122.65.76:8080/api/user/verifyEmail';
+
+  static const String register = 'http://134.122.65.76:8080/api/user/register';
 }

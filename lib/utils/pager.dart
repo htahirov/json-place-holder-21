@@ -7,6 +7,7 @@ import '../providers/register_provider.dart';
 import '../ui/pages/otp/otp_page.dart';
 import '../ui/pages/posts/posts_page.dart';
 import '../ui/pages/register/register_page.dart';
+import 'di/locator.dart';
 
 class Pager {
   Pager._();
@@ -16,8 +17,8 @@ class Pager {
         child: const RegisterPage(),
       );
 
-  static Widget get posts => ChangeNotifierProvider(
-        create: (_) => PostProvider()..getPosts(),
+  static Widget get posts => ChangeNotifierProvider<PostProvider>(
+        create: (_) => locator()..getPosts(),
         child: const PostsPage(),
       );
 

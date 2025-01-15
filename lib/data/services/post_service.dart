@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:developer' as dev;
 
 import 'package:http/http.dart' as http;
 
@@ -8,11 +8,11 @@ import '../endpoints.dart';
 import '../models/remote/post_response.dart';
 
 class PostService {
-  static Future<List<PostResponse>> getPosts() async {
+  Future<List<PostResponse>> getPosts() async {
     Uri url = Uri.parse(Endpoints.posts);
     http.Response response = await http.get(url);
-    log('Status Code: ${response.statusCode}');
-    log('Response Body: ${response.body}');
+    dev.log('Status Code: ${response.statusCode}');
+    dev.log('Response Body: ${response.body}');
     if (response.statusCode.isSuccess) {
       String body = response.body;
       final List data = jsonDecode(body);
@@ -23,5 +23,9 @@ class PostService {
     throw Exception();
   }
 
-  void addPost() {}
+  Future<void> addPost() async {}
+
+  Future<bool> deletePost() async => Future.value(true);
+
+  Future<void> updatePost() async {}
 }

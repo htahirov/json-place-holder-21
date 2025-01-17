@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http_api_app/ui/pages/products/products_page.dart';
 import 'package:provider/provider.dart';
 
+import '../cubits/products/products_cubit.dart';
 import '../providers/otp_provider.dart';
 import '../providers/post_provider.dart';
 import '../providers/register_provider.dart';
@@ -28,5 +31,10 @@ class Pager {
           ChangeNotifierProvider(create: (_) => OtpProvider()),
         ],
         child: const OtpPage(),
+      );
+
+  static Widget get products => BlocProvider<ProductsCubit>(
+        create: (_) => locator()..getProducts(),
+        child: const ProductsPage(),
       );
 }

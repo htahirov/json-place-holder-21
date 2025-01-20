@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../providers/register_provider.dart';
+import '../../../cubits/register/register_cubit.dart';
+import '../../../utils/pager.dart';
+import '../../../utils/snackbars/custom_snackbar.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final RegisterProvider registerProvider = context.read<RegisterProvider>();
+    final registerCubit = context.read<RegisterCubit>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Register Page'),
@@ -19,44 +21,62 @@ class RegisterPage extends StatelessWidget {
           spacing: 16,
           children: [
             TextFormField(
-              controller: registerProvider.nameController,
+              controller: registerCubit.nameController,
               decoration: const InputDecoration(
                 hintText: 'Name',
               ),
             ),
             TextFormField(
-              controller: registerProvider.surnameController,
+              controller: registerCubit.surnameController,
               decoration: const InputDecoration(
                 hintText: 'SurName',
               ),
             ),
             TextFormField(
-              controller: registerProvider.phoneController,
+              controller: registerCubit.phoneController,
               decoration: const InputDecoration(
                 hintText: 'Phone Number',
               ),
             ),
             TextFormField(
-              controller: registerProvider.birthdayController,
+              controller: registerCubit.birthdayController,
               decoration: const InputDecoration(
                 hintText: 'Birthday',
               ),
             ),
             TextFormField(
-              controller: registerProvider.emailController,
+              controller: registerCubit.emailController,
               decoration: const InputDecoration(
                 hintText: 'Email',
               ),
             ),
             TextFormField(
-              controller: registerProvider.passwordController,
+              controller: registerCubit.passwordController,
               decoration: const InputDecoration(
                 hintText: 'Password',
               ),
             ),
-            ElevatedButton(
-              onPressed: () => registerProvider.verifyEmail(context),
-              child: const Text('Register'),
+            BlocConsumer<RegisterCubit, RegisterState>(
+              listener: (_, state) {
+                if (state is RegisterSuccess) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (_) => Pager.otp(context),
+                    ),
+                  );
+                } else if (state is RegisterNetworkError) {
+                  CustomSnackbar.showNetworkError(context);
+                } else if (state is RegisterError) {
+                  CustomSnackbar.showError(context);
+                }
+              },
+              builder: (_, state) => ElevatedButton(
+                onPressed: state is RegisterLoading
+                    ? null
+                    : () => registerCubit.verifyEmail(context),
+                child: const Text('Register'),
+              ),
             ),
           ],
         ),

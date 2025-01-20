@@ -11,4 +11,11 @@ class Endpoints {
 
   static const String register = 'http://134.122.65.76:8080/api/user/register';
   static const String products = 'https://fakestoreapi.com/products';
+  static const String resetPassword =
+      'http://134.122.65.76:8080/api/user/resetPassword'; // Nihad
+  static const String login =
+      'http://134.122.65.76:8080/api/auth/login'; // Elmerdan
+  static const String logout =
+      'http://134.122.65.76:8080/api/auth/logout'; // Revan
+  static const String meals = 'http://134.122.65.76:8080/api/meal'; // Eli
 }

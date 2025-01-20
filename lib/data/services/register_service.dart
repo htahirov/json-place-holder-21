@@ -7,7 +7,7 @@ import '../../utils/extensions/int_extensions.dart';
 import '../endpoints.dart';
 
 class RegisterService {
-  static Future<bool> register({
+  Future<bool> register({
     required String otpCode,
     required String email,
     required String name,

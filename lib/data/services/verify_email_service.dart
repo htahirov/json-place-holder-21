@@ -7,7 +7,7 @@ import '../../utils/extensions/int_extensions.dart';
 import '../endpoints.dart';
 
 class VerifyEmailService {
-  static Future<bool> verifyEmail(String email) async {
+  Future<bool> verifyEmail(String email) async {
     Uri url = Uri.parse(Endpoints.verifyEmail);
     log('Endpoint: ${Endpoints.verifyEmail}');
     final body = jsonEncode({"email": email});

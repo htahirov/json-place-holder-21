@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../providers/otp_provider.dart';
+import '../../../cubits/otp/otp_cubit.dart';
+import '../../../utils/pager.dart';
+import '../../../utils/snackbars/custom_snackbar.dart';
 
 class OtpPage extends StatelessWidget {
   const OtpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final OtpProvider otpProvider = context.read<OtpProvider>();
+    final otpCubit = context.read<OtpCubit>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('OTP Page'),
@@ -19,14 +21,33 @@ class OtpPage extends StatelessWidget {
           spacing: 16,
           children: [
             TextFormField(
-              controller: otpProvider.otpController,
+              controller: otpCubit.otpController,
               decoration: const InputDecoration(
                 hintText: 'OTP',
               ),
             ),
-            ElevatedButton(
-              onPressed: () => otpProvider.register(context),
-              child: const Text('Register'),
+            BlocConsumer<OtpCubit, OtpState>(
+              listener: (context, state) {
+                if (state is OtpSuccess) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => Pager.posts,
+                    ),
+                    (route) => route.isCurrent,
+                  );
+                } else if (state is OtpNetworkError) {
+                  CustomSnackbar.showNetworkError(context);
+                } else if (state is OtpError) {
+                  CustomSnackbar.showError(context);
+                }
+              },
+              builder: (_, state) => ElevatedButton(
+                onPressed: state is OtpLoading
+                    ? null
+                    : () => otpCubit.register(context),
+                child: const Text('Register'),
+              ),
             ),
           ],
         ),

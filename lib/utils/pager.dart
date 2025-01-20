@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http_api_app/ui/pages/products/products_page.dart';
 import 'package:provider/provider.dart';
 
+import '../cubits/otp/otp_cubit.dart';
 import '../cubits/products/products_cubit.dart';
-import '../providers/otp_provider.dart';
+import '../cubits/register/register_cubit.dart';
 import '../providers/post_provider.dart';
-import '../providers/register_provider.dart';
 import '../ui/pages/otp/otp_page.dart';
 import '../ui/pages/posts/posts_page.dart';
+import '../ui/pages/products/products_page.dart';
 import '../ui/pages/register/register_page.dart';
 import 'di/locator.dart';
 
 class Pager {
   Pager._();
 
-  static Widget get register => ChangeNotifierProvider(
-        create: (_) => RegisterProvider(),
+  static Widget get register => BlocProvider<RegisterCubit>(
+        create: (_) => locator(),
         child: const RegisterPage(),
       );
 
@@ -25,10 +25,10 @@ class Pager {
         child: const PostsPage(),
       );
 
-  static Widget otp(BuildContext context) => MultiProvider(
+  static Widget otp(BuildContext context) => MultiBlocProvider(
         providers: [
-          ChangeNotifierProvider.value(value: context.read<RegisterProvider>()),
-          ChangeNotifierProvider(create: (_) => OtpProvider()),
+          BlocProvider.value(value: context.read<RegisterCubit>()),
+          BlocProvider<OtpCubit>(create: (_) => locator()),
         ],
         child: const OtpPage(),
       );

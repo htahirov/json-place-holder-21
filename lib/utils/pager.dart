@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
+import '../cubits/login/login_cubit.dart';
 import '../cubits/otp/otp_cubit.dart';
 import '../cubits/products/products_cubit.dart';
 import '../cubits/register/register_cubit.dart';
 import '../providers/post_provider.dart';
+import '../ui/pages/login/login_page.dart';
 import '../ui/pages/otp/otp_page.dart';
 import '../ui/pages/posts/posts_page.dart';
 import '../ui/pages/products/products_page.dart';
@@ -18,6 +20,11 @@ class Pager {
   static Widget get register => BlocProvider<RegisterCubit>(
         create: (_) => locator(),
         child: const RegisterPage(),
+      );
+
+  static Widget get login => BlocProvider<LoginCubit>(
+        create: (_) => locator<LoginCubit>(),
+        child: const LoginPage(),
       );
 
   static Widget get posts => ChangeNotifierProvider<PostProvider>(

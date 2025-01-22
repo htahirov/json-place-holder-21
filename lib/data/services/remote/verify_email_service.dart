@@ -3,8 +3,8 @@ import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 
-import '../../utils/extensions/int_extensions.dart';
-import '../endpoints.dart';
+import '../../../utils/extensions/int_extensions.dart';
+import '../../endpoints.dart';
 
 class VerifyEmailService {
   Future<bool> verifyEmail(String email) async {

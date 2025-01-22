@@ -11,7 +11,6 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginCubit = context.read<LoginCubit>();
-    
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -64,15 +63,13 @@ class LoginPage extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {
-                    
-                  },
+                  onPressed: () {},
                   child: const Text('Forget Password ?'),
                 ),
               ),
               const SizedBox(height: 16),
               BlocConsumer<LoginCubit, LoginState>(
-                listener: (context, state) {
+                listener: (_, state) {
                   if (state is LoginSuccess) {
                     Navigator.pushAndRemoveUntil(
                       context,
@@ -90,20 +87,18 @@ class LoginPage extends StatelessWidget {
                     );
                   }
                 },
-                builder: (_, state) {
-                  return ElevatedButton(
-                    onPressed: state is LoginLoading ? null : loginCubit.login,
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                builder: (_, state) => ElevatedButton(
+                  onPressed: state is LoginLoading ? null : loginCubit.login,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    child: state is LoginLoading
-                        ? const CircularProgressIndicator()
-                        : const Text('Login'),
-                  );
-                },
+                  ),
+                  child: state is LoginLoading
+                      ? const CircularProgressIndicator()
+                      : const Text('Login'),
+                ),
               ),
               const SizedBox(height: 16),
               Row(

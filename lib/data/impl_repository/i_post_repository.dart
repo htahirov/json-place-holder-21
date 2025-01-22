@@ -1,7 +1,7 @@
 import '../models/remote/post_response.dart';
 
 import '../repository/post_repository.dart';
-import '../services/post_service.dart';
+import '../services/remote/post_service.dart';
 
 class IPostRepository implements PostRepository {
   IPostRepository(this._postService);

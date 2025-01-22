@@ -1,8 +1,8 @@
 import '../models/remote/login_response.dart';
 import '../repository/auth_repo.dart';
-import '../services/login_service.dart';
-import '../services/register_service.dart';
-import '../services/verify_email_service.dart';
+import '../services/remote/login_service.dart';
+import '../services/remote/register_service.dart';
+import '../services/remote/verify_email_service.dart';
 
 class IAuthRepo implements AuthRepo {
   const IAuthRepo(

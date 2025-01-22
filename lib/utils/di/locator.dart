@@ -10,17 +10,18 @@ import '../../data/impl_repository/i_products_repo.dart';
 import '../../data/repository/auth_repo.dart';
 import '../../data/repository/post_repository.dart';
 import '../../data/repository/products_repo.dart';
-import '../../data/services/login_service.dart';
-import '../../data/services/post_service.dart';
-import '../../data/services/products_service.dart';
-import '../../data/services/register_service.dart';
-import '../../data/services/verify_email_service.dart';
+import '../../data/services/remote/login_service.dart';
+import '../../data/services/remote/post_service.dart';
+import '../../data/services/remote/products_service.dart';
+import '../../data/services/remote/register_service.dart';
+import '../../data/services/remote/verify_email_service.dart';
 import '../../providers/post_provider.dart';
-import '../hive/auth_local_storage.dart';
+import '../../data/services/local/auth_local_storage.dart';
 
 final locator = GetIt.instance;
 
 void setupLocator() {
+  // Local storage
   locator.registerLazySingleton(() => AuthLocalStorage());
 
   // Services

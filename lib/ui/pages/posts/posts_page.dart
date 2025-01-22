@@ -15,22 +15,18 @@ class PostsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Posts'),
       ),
-      body: Consumer<PostProvider>(
-        builder: (_, __, ___) {
-          if (postProvider.currentState == PostStates.networkError) {
-            return const Center(child: Text('Network Error Occured'));
-          } else if (postProvider.currentState == PostStates.error) {
-            return const Center(child: Text('Error Occured'));
-          } else {
-            final isLoading = postProvider.currentState == PostStates.loading;
-            return Skeletonizer(
-              enableSwitchAnimation: true,
-              enabled: isLoading,
-              child: PostListWidget(
-                posts: isLoading ? postProvider.mockPosts : postProvider.posts,
-              ),
-            );
-          }
+      body: StreamBuilder(
+        stream: postProvider.postSubject.stream,
+        builder: (_, snapshot) {
+          final isLoading = !snapshot.hasData;
+          final posts = snapshot.data ?? postProvider.mockPosts;
+          return Skeletonizer(
+            enableSwitchAnimation: true,
+            enabled: isLoading,
+            child: PostListWidget(
+              posts: posts,
+            ),
+          );
         },
       ),
     );

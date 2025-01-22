@@ -1,6 +1,6 @@
 import '../models/remote/product_response.dart';
 import '../repository/products_repo.dart';
-import '../services/products_service.dart';
+import '../services/remote/products_service.dart';
 
 class IProductsRepo implements ProductsRepo {
   IProductsRepo(this._productsService);

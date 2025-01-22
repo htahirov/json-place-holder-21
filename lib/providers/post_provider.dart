@@ -1,33 +1,29 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:rxdart/subjects.dart';
 
 import '../data/models/remote/post_response.dart';
 import '../data/repository/post_repository.dart';
-
-enum PostStates { loading, success, error, networkError }
 
 class PostProvider extends ChangeNotifier {
   PostProvider(this._postRepository);
 
   final PostRepository _postRepository;
 
-  late List<PostResponse> posts;
-  final mockPosts = List.generate(5, (_) => PostResponse.mock());
+  late final mockPosts = List.generate(5, (_) => PostResponse.mock());
 
-  late PostStates currentState;
+  final postSubject = BehaviorSubject<List<PostResponse>>();
 
   void getPosts() async {
     try {
-      currentState = PostStates.loading;
-      posts = await _postRepository.getPosts();
-      currentState = PostStates.success;
+      postSubject.add([]);
+      final posts = await _postRepository.getPosts();
+      postSubject.add(posts);
     } on SocketException {
-      currentState = PostStates.networkError;
+      postSubject.addError('Network error');
     } catch (e) {
-      currentState = PostStates.error;
-    } finally {
-      notifyListeners();
+      postSubject.addError('Error Occured');
     }
   }
 }

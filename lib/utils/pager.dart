@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http_api_app/cubits/meals/meals_cubit.dart';
+import 'package:http_api_app/ui/pages/meals/meals_page.dart';
 import 'package:provider/provider.dart';
 
 import '../cubits/otp/otp_cubit.dart';
@@ -37,4 +39,9 @@ class Pager {
         create: (_) => locator()..getProducts(),
         child: const ProductsPage(),
       );
+   static Widget get meals => BlocProvider<MealsCubit>(
+        create: (_) => locator()..getMeals(),
+        child: const MealsPage(),
+      );    
+
 }

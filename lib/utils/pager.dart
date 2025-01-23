@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http_api_app/ui/pages/reset_password/reset_password.dart';
 import 'package:provider/provider.dart';
 
 import '../cubits/auth/auth_cubit.dart';
@@ -51,4 +52,6 @@ class Pager {
         create: (_) => locator()..checkAuth(),
         child: const AuthCheckPage(),
       );
+
+  static Widget get resetPassword => const ResetPasswordPage();
 }

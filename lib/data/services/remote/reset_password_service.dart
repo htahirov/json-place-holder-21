@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:http/http.dart' as http;
-import '../../../utils/extensions/int_extensions.dart';
 
+import 'package:http/http.dart' as http;
+
+import '../../../utils/di/locator.dart';
+import '../../../utils/extensions/int_extensions.dart';
 import '../../endpoints.dart';
 import '../local/auth_local_storage.dart';
 
@@ -19,7 +21,7 @@ class ResetPasswordService {
       "confirmPassword": confirmPassword,
     });
 
-     final token = AuthLocalStorage().token;
+    final token = locator<AuthLocalStorage>().token;
 
     final headers = {
       "accept": "*/*",

@@ -1,3 +1,5 @@
+import 'package:http_api_app/data/services/remote/reset_password_service.dart';
+
 import '../models/remote/login_response.dart';
 import '../repository/auth_repo.dart';
 import '../services/remote/login_service.dart';
@@ -9,11 +11,13 @@ class IAuthRepo implements AuthRepo {
     this._registerService,
     this._verifyEmailService,
     this._loginService,
+    this._resetPasswordService,
   );
 
   final RegisterService _registerService;
   final VerifyEmailService _verifyEmailService;
   final LoginService _loginService;
+  final ResetPasswordService _resetPasswordService;
 
   @override
   Future<bool> register({
@@ -38,7 +42,7 @@ class IAuthRepo implements AuthRepo {
   @override
   Future<bool> verifyEmail(String email) =>
       _verifyEmailService.verifyEmail(email);
-      
+
   @override
   Future<LoginResponse> login({
     required String email,
@@ -47,5 +51,15 @@ class IAuthRepo implements AuthRepo {
       _loginService.login(
         email: email,
         password: password,
+      );
+
+  @override
+  Future<bool> resetPassword({
+    required String newPassword,
+    required String confirmPassword,
+  }) =>
+      _resetPasswordService.resetPassword(
+        newPassword: newPassword,
+        confirmPassword: confirmPassword,
       );
 }

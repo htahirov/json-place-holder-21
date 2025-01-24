@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http_api_app/ui/pages/reset_password/reset_password.dart';
+import 'package:http_api_app/cubits/resetPassword/reset_password_cubit.dart';
+import 'package:http_api_app/ui/pages/reset_password/reset_password_page.dart';
 import 'package:provider/provider.dart';
 
 import '../cubits/auth/auth_cubit.dart';
@@ -53,5 +54,8 @@ class Pager {
         child: const AuthCheckPage(),
       );
 
-  static Widget get resetPassword => const ResetPasswordPage();
+  static Widget get resetPassword => BlocProvider<ResetPasswordCubit>(
+        create: (context) => locator(),
+        child: const ResetPasswordPage(),
+      );
 }

@@ -15,4 +15,9 @@ abstract class AuthRepo {
     required String email,
     required String password,
   });
+
+  Future<bool> resetPassword({
+    required String newPassword,
+    required String confirmPassword,
+  });
 }

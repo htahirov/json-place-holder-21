@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../providers/post_provider.dart';
+import '../../../utils/pager.dart';
 import 'widgets/post_list_widget.dart';
 
 class PostsPage extends StatelessWidget {
@@ -14,6 +15,19 @@ class PostsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Posts'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => Pager.resetPassword,
+                ),
+              );
+            },
+            icon: const Icon(Icons.lock_reset_outlined),
+          )
+        ],
       ),
       body: StreamBuilder(
         stream: postProvider.postSubject.stream,

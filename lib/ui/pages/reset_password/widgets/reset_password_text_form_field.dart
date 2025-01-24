@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class ResetPasswordTextField extends StatefulWidget {
   final String labelText;
   final bool isPassword;
+  final TextEditingController controller;
 
   const ResetPasswordTextField({
     super.key,
     required this.labelText,
     this.isPassword = false,
+    required this.controller,
   });
 
   @override
@@ -26,6 +28,7 @@ class _ResetPasswordTextFieldState extends State<ResetPasswordTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       decoration: InputDecoration(
         labelText: widget.labelText,
         border: const OutlineInputBorder(),

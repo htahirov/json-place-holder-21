@@ -63,15 +63,8 @@ class LoginPage extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Pager.resetPassword,
-                      ),
-                    );
-                  },
-                  child: const Text('Forget Password ?'),
+                  onPressed: () {},
+                  child: const Text('Forgot Password ?'),
                 ),
               ),
               const SizedBox(height: 16),

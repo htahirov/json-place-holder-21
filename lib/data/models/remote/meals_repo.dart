@@ -24,7 +24,7 @@ class MealsResponse {
         title: json["title"],
         image: json["image"],
         ingredientsList: List<String>.from(json["ingredientsList"].map((x) => x)),
-        category: Category.fromJson(json["category"]),
+        category: Category.fromJson(json["category"])
     );
 
     Map<String, dynamic> toJson() => {

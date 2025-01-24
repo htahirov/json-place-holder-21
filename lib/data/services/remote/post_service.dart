@@ -3,9 +3,9 @@ import 'dart:developer' as dev;
 
 import 'package:http/http.dart' as http;
 
-import '../../utils/extensions/int_extensions.dart';
-import '../endpoints.dart';
-import '../models/remote/post_response.dart';
+import '../../../utils/extensions/int_extensions.dart';
+import '../../endpoints.dart';
+import '../../models/remote/post_response.dart';
 
 class PostService {
   Future<List<PostResponse>> getPosts() async {

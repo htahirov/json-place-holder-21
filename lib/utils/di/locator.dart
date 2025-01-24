@@ -1,5 +1,8 @@
 import 'package:get_it/get_it.dart';
-
+import 'package:http_api_app/cubits/meals/meals_cubit.dart';
+import 'package:http_api_app/data/impl_repository/i_meals_repo.dart';
+import 'package:http_api_app/data/repository/meals_repo.dart';
+import 'package:http_api_app/data/services/meals_service.dart';
 import '../../cubits/auth/auth_cubit.dart';
 import '../../cubits/login/login_cubit.dart';
 import '../../cubits/otp/otp_cubit.dart';
@@ -31,6 +34,11 @@ void setupLocator() {
   locator.registerLazySingleton(() => LoginService());
   locator.registerLazySingleton(() => PostService());
   locator.registerLazySingleton(() => ProductsService());
+  locator.registerLazySingleton<ProductsRepo>(() => IProductsRepo(locator()));
+
+  locator.registerLazySingleton(() => MealsService());
+  locator.registerLazySingleton<MealsRepo>(() => IMealsRepo(locator()));
+
   locator.registerLazySingleton(() => RegisterService());
   locator.registerLazySingleton(() => VerifyEmailService());
   locator.registerLazySingleton(() => ResetPasswordService());
@@ -61,4 +69,6 @@ void setupLocator() {
   locator.registerFactory(() => AuthCubit(locator<AuthLocalStorage>()));
   locator.registerFactory(() => ResetPasswordCubit(locator()));
    locator.registerFactory(() => LoginCubit(locator<AuthRepo>(), locator<AuthLocalStorage>()));
+}
+  locator.registerFactory(() => MealsCubit(locator()));
 }
